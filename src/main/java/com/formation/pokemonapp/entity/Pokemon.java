@@ -18,7 +18,7 @@ public class Pokemon {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "experience")
-    private int experience;
+    @Column(name = "baseExp")
+    private int baseExp;
 
 }
