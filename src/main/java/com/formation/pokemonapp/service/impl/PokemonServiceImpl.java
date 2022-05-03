@@ -22,7 +22,7 @@ public class PokemonServiceImpl implements PokemonService {
 
     @Override
     public Set<PokemonDTO> getPokemonsByTeam(long idTeam ) {
-        Set<Pokemon> pokemons =pokemonRepository.getPokemonsByTeam(idTeam);
+        Set<Pokemon> pokemons =pokemonRepository.getPokemonsByTeamId(idTeam);
         Set<PokemonDTO> pokemonsDTO = new HashSet<>();
 
         for(Pokemon pokemon : pokemons){

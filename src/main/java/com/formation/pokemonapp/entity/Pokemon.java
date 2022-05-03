@@ -1,13 +1,15 @@
 package com.formation.pokemonapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.formation.pokemonapp.dto.TeamDTO;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Table(name="pokemon")
 @Data
 public class Pokemon {
 
@@ -21,4 +23,6 @@ public class Pokemon {
     @Column(name = "baseExp")
     private int baseExp;
 
+    @ManyToMany(mappedBy = "pokemons")
+    private Set<Team> teams = new HashSet<>();
 }
