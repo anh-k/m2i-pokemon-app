@@ -8,8 +8,8 @@ import java.util.Set;
 
 public interface TeamService {
     /**
-    * Récupération des teams
-    */
+     * Récupération des teams
+     */
     Set<TeamDTO> getAllTeamDTO();
 
     /**

@@ -1,9 +1,7 @@
 package com.formation.pokemonapp.service.impl;
 
 import com.formation.pokemonapp.dto.PokemonDTO;
-import com.formation.pokemonapp.dto.TeamDTO;
 import com.formation.pokemonapp.entity.Pokemon;
-import com.formation.pokemonapp.entity.Team;
 import com.formation.pokemonapp.repository.PokemonRepository;
 import com.formation.pokemonapp.service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +19,11 @@ public class PokemonServiceImpl implements PokemonService {
     private PokemonRepository pokemonRepository;
 
     @Override
-    public Set<PokemonDTO> getPokemonsByTeam(long idTeam ) {
-        Set<Pokemon> pokemons =pokemonRepository.getPokemonsByTeamId(idTeam);
+    public Set<PokemonDTO> getPokemonsByTeam(long idTeam) {
+        Set<Pokemon> pokemons = pokemonRepository.getAllByTeams(idTeam);
         Set<PokemonDTO> pokemonsDTO = new HashSet<>();
 
-        for(Pokemon pokemon : pokemons){
+        for (Pokemon pokemon : pokemons) {
             PokemonDTO pokemonDTO = new PokemonDTO();
             pokemonDTO.setId(pokemon.getId());
             pokemonDTO.setName(pokemon.getName());
@@ -38,7 +36,7 @@ public class PokemonServiceImpl implements PokemonService {
 
     @Override
     public Set<Pokemon> findByIds(Set<Long> pokemonsId) {
-        return pokemonRepository.getPokemonsByids(pokemonsId);
+        return pokemonRepository.getAllByPokemonsId(pokemonsId);
     }
 
 

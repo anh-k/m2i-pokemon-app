@@ -3,7 +3,6 @@ package com.formation.pokemonapp.service.impl;
 import com.formation.pokemonapp.dto.TeamDTO;
 import com.formation.pokemonapp.entity.Team;
 import com.formation.pokemonapp.input.TeamInput;
-
 import com.formation.pokemonapp.repository.TeamRepository;
 import com.formation.pokemonapp.service.PokemonService;
 import com.formation.pokemonapp.service.TeamService;
@@ -26,10 +25,10 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Set<TeamDTO> getAllTeamDTO() {
-        Set<Team> teams= new HashSet<>(teamRepository.findAll());
+        Set<Team> teams = new HashSet<>(teamRepository.findAll());
         Set<TeamDTO> teamsDTO = new HashSet<>();
 
-        for(Team team : teams){
+        for (Team team : teams) {
             TeamDTO teamDTO = new TeamDTO();
             teamDTO.setId(team.getId());
             teamDTO.setName(team.getName());
@@ -43,7 +42,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public TeamDTO getTeamDTO(long id) {
 
-        Team team= teamRepository.findById(id);
+        Team team = teamRepository.findById(id);
 
         TeamDTO teamDTO = new TeamDTO();
         teamDTO.setId(team.getId());

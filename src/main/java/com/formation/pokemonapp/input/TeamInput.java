@@ -3,6 +3,7 @@ package com.formation.pokemonapp.input;
 import lombok.Data;
 
 import java.util.Set;
+
 @Data
 public class TeamInput {
 
