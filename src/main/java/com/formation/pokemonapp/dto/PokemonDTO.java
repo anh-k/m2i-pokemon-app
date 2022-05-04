@@ -14,4 +14,7 @@ public class PokemonDTO {
 
     @JsonProperty("baseExp")
     private int baseExp;
+
+    @JsonProperty("team")
+    private Long team;
 }

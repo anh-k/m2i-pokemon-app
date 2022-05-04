@@ -2,15 +2,14 @@ package com.formation.pokemonapp.input;
 
 import lombok.Data;
 
-import java.util.Set;
-
 @Data
-public class TeamInput {
+public class PokemonInput {
+
 
     private long id;
 
     private String name;
 
-    private Set<PokemonInput> pokemons;
+    private int baseXp;
 
 }

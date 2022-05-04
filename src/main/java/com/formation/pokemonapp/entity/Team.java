@@ -1,7 +1,9 @@
 package com.formation.pokemonapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +12,7 @@ import java.util.Set;
 @Entity
 @Table(name = "team")
 @Data
+@NoArgsConstructor
 public class Team {
 
     @Id
@@ -17,18 +20,15 @@ public class Team {
     private long id;
 
     @Column(name = "name", nullable = false)
+    @NotNull
     private String name;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "id_user", referencedColumnName = "id")
 //    private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = "teams", allowSetters = true)
-    @JoinTable(name = "team_pokemon",
-            joinColumns = @JoinColumn(name = "id_teams", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id_pokemon", referencedColumnName = "id"))
+    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    @NotNull
+    @JsonIgnoreProperties(value = {"team"}, allowSetters = true)
     private Set<Pokemon> pokemons = new HashSet<>();
-
-
 }

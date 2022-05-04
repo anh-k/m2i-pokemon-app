@@ -27,4 +27,9 @@ public interface TeamService {
      */
     void delete(final TeamInput teamInput);
 
+    /**
+     * Récupération d'une team grâce à l'id
+     */
+    Team getTeam(long id);
+
 }

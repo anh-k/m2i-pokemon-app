@@ -1,7 +1,9 @@
 package com.formation.pokemonapp.service.impl;
 
 import com.formation.pokemonapp.dto.TeamDTO;
+import com.formation.pokemonapp.entity.Pokemon;
 import com.formation.pokemonapp.entity.Team;
+import com.formation.pokemonapp.input.PokemonInput;
 import com.formation.pokemonapp.input.TeamInput;
 import com.formation.pokemonapp.repository.TeamRepository;
 import com.formation.pokemonapp.service.PokemonService;
@@ -21,7 +23,7 @@ public class TeamServiceImpl implements TeamService {
     private TeamRepository teamRepository;
 
     @Autowired
-    private PokemonService pokemonService;
+    protected PokemonService pokemonService;
 
     @Override
     public Set<TeamDTO> getAllTeamDTO() {
@@ -54,19 +56,33 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team createOrUpdate(TeamInput teamInput) {
-        Team team = null;
+        Team team = new Team();
         if (teamInput.getId() != 0) {
             team.setId(teamInput.getId());
         }
         team.setName(teamInput.getName());
-        team.setPokemons(pokemonService.findByIds(teamInput.getPokemonsId()));
+        team.setPokemons(this.createPokemons(teamInput.getPokemons()));
         teamRepository.save(team);
         return team;
+    }
+
+    public Set<Pokemon> createPokemons(Set<PokemonInput> pokemonsInput) {
+        Set<Pokemon> pokemons = new HashSet<>();
+        for (PokemonInput pokemonInput : pokemonsInput) {
+            Pokemon pokemon = pokemonService.createOrUpdate(pokemonInput);
+            pokemons.add(pokemon);
+        }
+        return pokemons;
     }
 
     @Override
     public void delete(TeamInput teamInput) {
         teamRepository.delete(teamRepository.findById(teamInput.getId()));
+    }
+
+    @Override
+    public Team getTeam(long id) {
+        return teamRepository.findById(id);
     }
 
 

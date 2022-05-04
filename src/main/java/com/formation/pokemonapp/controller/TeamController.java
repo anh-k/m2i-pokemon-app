@@ -17,22 +17,22 @@ public class TeamController {
     private TeamService teamService;
 
     @GetMapping("/allTeams")
-    public Set<TeamDTO> getTeams(){
+    public Set<TeamDTO> getTeams() {
         return teamService.getAllTeamDTO();
     }
 
     @GetMapping("/{idTeam}")
-    public TeamDTO getTeam(@PathVariable("idTeam") final long idTeam){
+    public TeamDTO getTeam(@PathVariable("idTeam") final long idTeam) {
         return teamService.getTeamDTO(Long.valueOf(idTeam));
     }
 
     @PostMapping("/createOrUpdate")
-    public Team createOrUpdate(@RequestBody final TeamInput teamInput){
+    public Team createOrUpdate(@RequestBody final TeamInput teamInput) {
         return teamService.createOrUpdate(teamInput);
     }
 
     @DeleteMapping("/delete")
-    public void delete(@RequestBody final TeamInput teamInput){
+    public void delete(@RequestBody final TeamInput teamInput) {
         teamService.delete(teamInput);
     }
 }
