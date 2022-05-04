@@ -62,8 +62,7 @@ public class TeamServiceImpl implements TeamService {
         }
         team.setName(teamInput.getName());
         team.setPokemons(this.createPokemons(teamInput.getPokemons()));
-        teamRepository.save(team);
-        return team;
+        return teamRepository.save(team);
     }
 
     public Set<Pokemon> createPokemons(Set<PokemonInput> pokemonsInput) {

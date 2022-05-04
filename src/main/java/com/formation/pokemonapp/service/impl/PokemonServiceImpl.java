@@ -47,9 +47,8 @@ public class PokemonServiceImpl implements PokemonService {
             pokemon.setId(pokemonInput.getId());
         }
         pokemon.setName(pokemonInput.getName());
-        pokemon.setBaseExp(pokemonInput.getBaseXp());
-        pokemonRepository.save(pokemon);
-        return pokemon;
+        pokemon.setBaseExp(pokemonInput.getBaseExp());
+        return pokemonRepository.save(pokemon);
     }
 
 

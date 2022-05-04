@@ -24,7 +24,7 @@ public class Pokemon {
     private int baseExp;
 
     @ManyToOne
-    @JoinColumn(name = "id_team", referencedColumnName = "id")
+    @JoinColumn(name = "team_id", referencedColumnName = "id")
     @NotNull
     @JsonIgnoreProperties(value = "pokemons", allowSetters = true)
     private Team team;
