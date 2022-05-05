@@ -27,7 +27,7 @@ public class Team {
 //    private User user;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pokemon_id")
+    @JoinColumn(name = "team_id")
     @NotNull
     private Set<Pokemon> pokemons = new HashSet<>();
 }
