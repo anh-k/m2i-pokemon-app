@@ -24,7 +24,7 @@ public class TeamController {
     }
 
     @GetMapping("/{teamId}")
-    public TeamDTO getTeam(@PathVariable("teamId") final long teamId) {
+    public TeamDTO getTeam(@PathVariable("teamId") final String teamId) {
         return teamService.getTeamDTO(Long.valueOf(teamId));
     }
 

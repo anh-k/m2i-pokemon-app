@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -20,10 +21,14 @@ public class PokemonServiceImpl implements PokemonService {
     private PokemonRepository pokemonRepository;
 
     @Override
-    public Set<PokemonDTO> getPokemonsByTeam(long idTeam) {
-        Set<Pokemon> pokemons = pokemonRepository.getAllByTeam(idTeam);
-        Set<PokemonDTO> pokemonsDTO = new HashSet<>();
+    public Set<Pokemon> findByIds(Set<Long> pokemonsId) {
 
+        return pokemonRepository.getAllByPokemonsId(pokemonsId);
+    }
+
+    @Override
+    public Set<PokemonDTO> convertPokemonToDTO(Set<Pokemon> pokemons) {
+        Set<PokemonDTO> pokemonsDTO = new HashSet<>();
         for (Pokemon pokemon : pokemons) {
             PokemonDTO pokemonDTO = new PokemonDTO();
             pokemonDTO.setId(pokemon.getId());
@@ -31,14 +36,10 @@ public class PokemonServiceImpl implements PokemonService {
             pokemonDTO.setBaseExp(pokemon.getBaseExp());
             pokemonsDTO.add(pokemonDTO);
         }
-
         return pokemonsDTO;
+
     }
 
-    @Override
-    public Set<Pokemon> findByIds(Set<Long> pokemonsId) {
-        return pokemonRepository.getAllByPokemonsId(pokemonsId);
-    }
 
     @Override
     public Pokemon createOrUpdate(PokemonInput pokemonInput) {
@@ -51,5 +52,19 @@ public class PokemonServiceImpl implements PokemonService {
         return pokemonRepository.save(pokemon);
     }
 
+    public Optional<Pokemon> findById(Long pokemonId) {
+        return pokemonRepository.findById(pokemonId);
+    }
 
+    @Override
+    public PokemonDTO getPokemonDTO(long id) {
+
+        Pokemon pokemon = pokemonRepository.findById(id);
+
+        PokemonDTO pokemonDTO = new PokemonDTO();
+        pokemonDTO.setId(pokemon.getId());
+        pokemonDTO.setName(pokemon.getName());
+        pokemonDTO.setBaseExp(pokemon.getBaseExp());
+        return pokemonDTO;
+    }
 }

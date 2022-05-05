@@ -1,6 +1,5 @@
 package com.formation.pokemonapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,8 +26,8 @@ public class Team {
 //    @JoinColumn(name = "id_user", referencedColumnName = "id")
 //    private User user;
 
-    @OneToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pokemon_id")
     @NotNull
-    @JsonIgnoreProperties(value = {"team"}, allowSetters = true)
     private Set<Pokemon> pokemons = new HashSet<>();
 }

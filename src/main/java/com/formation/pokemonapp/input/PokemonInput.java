@@ -11,4 +11,6 @@ public class PokemonInput {
 
     private int baseExp;
 
+    private long team;
+
 }

@@ -1,7 +1,5 @@
 package com.formation.pokemonapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,9 +21,4 @@ public class Pokemon {
     @Column(name = "baseExp")
     private int baseExp;
 
-    @ManyToOne
-    @JoinColumn(name = "team_id", referencedColumnName = "id")
-    @NotNull
-    @JsonIgnoreProperties(value = "pokemons", allowSetters = true)
-    private Team team;
 }

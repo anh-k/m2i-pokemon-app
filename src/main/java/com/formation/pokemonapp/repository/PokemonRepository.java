@@ -11,8 +11,9 @@ import java.util.Set;
 @Repository
 public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
 
-    Set<Pokemon> getAllByTeam(@Param("teamId") long teamId);
-
     @Query("select p from Pokemon p where p.id in :pokemonsId")
     Set<Pokemon> getAllByPokemonsId(@Param("pokemonsId") Set<Long> pokemonsId);
+
+
+    Pokemon findById(long id);
 }

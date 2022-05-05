@@ -34,7 +34,7 @@ public class TeamServiceImpl implements TeamService {
             TeamDTO teamDTO = new TeamDTO();
             teamDTO.setId(team.getId());
             teamDTO.setName(team.getName());
-            teamDTO.setPokemons(pokemonService.getPokemonsByTeam(team.getId()));
+            teamDTO.setPokemons(pokemonService.convertPokemonToDTO(team.getPokemons()));
             teamsDTO.add(teamDTO);
         }
 
@@ -49,8 +49,7 @@ public class TeamServiceImpl implements TeamService {
         TeamDTO teamDTO = new TeamDTO();
         teamDTO.setId(team.getId());
         teamDTO.setName(team.getName());
-        teamDTO.setPokemons(pokemonService.getPokemonsByTeam(team.getId()));
-
+        teamDTO.setPokemons(pokemonService.convertPokemonToDTO(team.getPokemons()));
         return teamDTO;
     }
 
