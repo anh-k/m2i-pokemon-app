@@ -2,7 +2,7 @@ package com.formation.pokemonapp.service;
 
 import com.formation.pokemonapp.dto.PokemonDTO;
 import com.formation.pokemonapp.entity.Pokemon;
-import com.formation.pokemonapp.input.PokemonInput;
+import lombok.NonNull;
 
 import java.util.Optional;
 import java.util.Set;
@@ -22,7 +22,7 @@ public interface PokemonService {
     /**
      * Création ou modification d'un pokemon
      */
-    Pokemon createOrUpdate(final PokemonInput pokemonInput);
+    Pokemon savePokemon(@NonNull Pokemon pokemon);
 
     /**
      * Récupération d'un pokemon en fonction de son id

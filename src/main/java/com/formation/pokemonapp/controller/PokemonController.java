@@ -2,7 +2,6 @@ package com.formation.pokemonapp.controller;
 
 import com.formation.pokemonapp.dto.PokemonDTO;
 import com.formation.pokemonapp.entity.Pokemon;
-import com.formation.pokemonapp.input.PokemonInput;
 import com.formation.pokemonapp.service.PokemonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +21,9 @@ public class PokemonController {
     }
 
     @PostMapping("/createOrUpdate")
-    public Pokemon createOrUpdate(@RequestBody final PokemonInput pokemonInput) {
-        log.info("{} has been saved", pokemonInput);
-        return pokemonService.createOrUpdate(pokemonInput);
+    public Pokemon createOrUpdate(@RequestBody PokemonDTO pokemonDTO) {
+        log.info("{} has been saved", pokemonDTO);
+        Pokemon pokemon = pokemonDTO.convertToEntity();
+        return pokemonService.savePokemon(pokemon);
     }
 }
