@@ -2,6 +2,7 @@ package com.formation.pokemonapp.service.impl;
 
 import com.formation.pokemonapp.dto.PokemonDTO;
 import com.formation.pokemonapp.entity.Pokemon;
+import com.formation.pokemonapp.errors.ApplicationException;
 import com.formation.pokemonapp.repository.PokemonRepository;
 import com.formation.pokemonapp.service.PokemonService;
 import lombok.NonNull;
@@ -38,7 +39,7 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public Pokemon savePokemon(@NonNull Pokemon pokemon) {
+    public Pokemon savePokemon(@NonNull Pokemon pokemon) throws ApplicationException {
         return pokemonRepository.save(pokemon);
     }
 
@@ -47,7 +48,7 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public PokemonDTO getPokemonDTO(long id) {
+    public PokemonDTO getPokemonDTO(long id) throws ApplicationException {
         Pokemon pokemon = pokemonRepository.findById(id);
 
         PokemonDTO pokemonDTO = new PokemonDTO();
@@ -56,5 +57,4 @@ public class PokemonServiceImpl implements PokemonService {
         pokemonDTO.setBaseExp(pokemon.getBaseExp());
         return pokemonDTO;
     }
-
 }

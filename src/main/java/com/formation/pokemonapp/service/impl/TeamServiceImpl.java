@@ -2,6 +2,7 @@ package com.formation.pokemonapp.service.impl;
 
 import com.formation.pokemonapp.dto.TeamDTO;
 import com.formation.pokemonapp.entity.Team;
+import com.formation.pokemonapp.errors.ApplicationException;
 import com.formation.pokemonapp.repository.TeamRepository;
 import com.formation.pokemonapp.service.PokemonService;
 import com.formation.pokemonapp.service.TeamService;
@@ -37,7 +38,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public TeamDTO getTeamDTO(long id) {
+    public TeamDTO getTeamDTO(long id) throws ApplicationException {
         Team team = teamRepository.findById(id);
 
         TeamDTO teamDTO = new TeamDTO();
@@ -48,12 +49,12 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Team saveTeam(@NonNull Team team) {
+    public Team saveTeam(@NonNull Team team) throws ApplicationException {
         return teamRepository.save(team);
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(long id) throws ApplicationException {
         teamRepository.delete(teamRepository.findById(id));
     }
 

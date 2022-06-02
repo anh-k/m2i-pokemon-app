@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
+@Table(name = "\"user\"")
 @Entity
 @Table(name = "`user`")
 @NoArgsConstructor
