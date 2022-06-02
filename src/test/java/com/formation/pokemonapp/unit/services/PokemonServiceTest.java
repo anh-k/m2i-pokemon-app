@@ -1,6 +1,7 @@
 package com.formation.pokemonapp.unit.services;
 
 import com.formation.pokemonapp.entity.Pokemon;
+import com.formation.pokemonapp.errors.ApplicationException;
 import com.formation.pokemonapp.repository.PokemonRepository;
 import com.formation.pokemonapp.service.impl.PokemonServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +48,7 @@ public class PokemonServiceTest {
 
     @Test
     @DisplayName("save pokemon successfully")
-    void goodData() {
+    void goodData() throws ApplicationException {
         pokemonService.savePokemon(pokemon);
         verify(pokemonRepository).save(captor.capture());
         assertThat(captor.getValue().getId()).isEqualTo(1);
