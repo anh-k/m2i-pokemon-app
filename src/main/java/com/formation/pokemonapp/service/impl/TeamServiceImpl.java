@@ -1,14 +1,12 @@
 package com.formation.pokemonapp.service.impl;
 
 import com.formation.pokemonapp.dto.TeamDTO;
-import com.formation.pokemonapp.entity.Pokemon;
 import com.formation.pokemonapp.entity.Team;
-import com.formation.pokemonapp.input.PokemonInput;
-import com.formation.pokemonapp.input.TeamInput;
 import com.formation.pokemonapp.repository.TeamRepository;
 import com.formation.pokemonapp.service.PokemonService;
 import com.formation.pokemonapp.service.TeamService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,13 +15,10 @@ import java.util.Set;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class TeamServiceImpl implements TeamService {
-
-    @Autowired
-    private TeamRepository teamRepository;
-
-    @Autowired
-    protected PokemonService pokemonService;
+    private final TeamRepository teamRepository;
+    private final PokemonService pokemonService;
 
     @Override
     public Set<TeamDTO> getAllTeamDTO() {
@@ -43,7 +38,6 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public TeamDTO getTeamDTO(long id) {
-
         Team team = teamRepository.findById(id);
 
         TeamDTO teamDTO = new TeamDTO();
@@ -54,28 +48,13 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Team createOrUpdate(TeamInput teamInput) {
-        Team team = new Team();
-        if (teamInput.getId() != 0) {
-            team.setId(teamInput.getId());
-        }
-        team.setName(teamInput.getName());
-        team.setPokemons(this.createPokemons(teamInput.getPokemons()));
+    public Team saveTeam(@NonNull Team team) {
         return teamRepository.save(team);
     }
 
-    public Set<Pokemon> createPokemons(Set<PokemonInput> pokemonsInput) {
-        Set<Pokemon> pokemons = new HashSet<>();
-        for (PokemonInput pokemonInput : pokemonsInput) {
-            Pokemon pokemon = pokemonService.createOrUpdate(pokemonInput);
-            pokemons.add(pokemon);
-        }
-        return pokemons;
-    }
-
     @Override
-    public void delete(TeamInput teamInput) {
-        teamRepository.delete(teamRepository.findById(teamInput.getId()));
+    public void delete(long id) {
+        teamRepository.delete(teamRepository.findById(id));
     }
 
     @Override

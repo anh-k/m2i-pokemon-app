@@ -2,7 +2,7 @@ package com.formation.pokemonapp.service;
 
 import com.formation.pokemonapp.dto.TeamDTO;
 import com.formation.pokemonapp.entity.Team;
-import com.formation.pokemonapp.input.TeamInput;
+import lombok.NonNull;
 
 import java.util.Set;
 
@@ -20,12 +20,12 @@ public interface TeamService {
     /**
      * Création ou modification d'une team
      */
-    Team createOrUpdate(final TeamInput teamInput);
+    Team saveTeam(@NonNull Team team);
 
     /**
      * Suppression d'une team
      */
-    void delete(final TeamInput teamInput);
+    void delete(long id);
 
     /**
      * Récupération d'une team grâce à l'id

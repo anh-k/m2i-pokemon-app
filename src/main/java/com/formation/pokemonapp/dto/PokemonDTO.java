@@ -1,6 +1,8 @@
 package com.formation.pokemonapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.formation.pokemonapp.entity.Pokemon;
+import com.formation.pokemonapp.entity.Team;
 import lombok.Data;
 
 @Data
@@ -15,4 +17,11 @@ public class PokemonDTO {
     @JsonProperty("baseExp")
     private int baseExp;
 
+    public Pokemon convertToEntity() {
+        return Pokemon.builder()
+                .id(id)
+                .name(name)
+                .baseExp(baseExp)
+                .build();
+    }
 }

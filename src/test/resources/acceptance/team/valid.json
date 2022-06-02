@@ -1,0 +1,17 @@
+{
+  "name": "Team 1",
+  "pokemons": [
+    {
+      "name": "BULBI",
+      "baseExp": 64
+    },
+    {
+      "name": "SALA",
+      "baseExp": 64
+    },
+    {
+      "name": "CARA",
+      "baseExp": 64
+    }
+  ]
+}

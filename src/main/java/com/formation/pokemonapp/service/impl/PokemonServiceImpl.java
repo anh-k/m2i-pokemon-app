@@ -2,10 +2,10 @@ package com.formation.pokemonapp.service.impl;
 
 import com.formation.pokemonapp.dto.PokemonDTO;
 import com.formation.pokemonapp.entity.Pokemon;
-import com.formation.pokemonapp.input.PokemonInput;
 import com.formation.pokemonapp.repository.PokemonRepository;
 import com.formation.pokemonapp.service.PokemonService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,14 +15,12 @@ import java.util.Set;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class PokemonServiceImpl implements PokemonService {
-
-    @Autowired
-    private PokemonRepository pokemonRepository;
+    private final PokemonRepository pokemonRepository;
 
     @Override
     public Set<Pokemon> findByIds(Set<Long> pokemonsId) {
-
         return pokemonRepository.getAllByPokemonsId(pokemonsId);
     }
 
@@ -37,18 +35,10 @@ public class PokemonServiceImpl implements PokemonService {
             pokemonsDTO.add(pokemonDTO);
         }
         return pokemonsDTO;
-
     }
 
-
     @Override
-    public Pokemon createOrUpdate(PokemonInput pokemonInput) {
-        Pokemon pokemon = new Pokemon();
-        if (pokemonInput.getId() != 0) {
-            pokemon.setId(pokemonInput.getId());
-        }
-        pokemon.setName(pokemonInput.getName());
-        pokemon.setBaseExp(pokemonInput.getBaseExp());
+    public Pokemon savePokemon(@NonNull Pokemon pokemon) {
         return pokemonRepository.save(pokemon);
     }
 
@@ -58,7 +48,6 @@ public class PokemonServiceImpl implements PokemonService {
 
     @Override
     public PokemonDTO getPokemonDTO(long id) {
-
         Pokemon pokemon = pokemonRepository.findById(id);
 
         PokemonDTO pokemonDTO = new PokemonDTO();
@@ -67,4 +56,5 @@ public class PokemonServiceImpl implements PokemonService {
         pokemonDTO.setBaseExp(pokemon.getBaseExp());
         return pokemonDTO;
     }
+
 }
