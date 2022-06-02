@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.formation</groupId>
     <artifactId>pokemon-app</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>pokemon-app</name>
     <description>A simplified application of Pokemon fights</description>
     <properties>
