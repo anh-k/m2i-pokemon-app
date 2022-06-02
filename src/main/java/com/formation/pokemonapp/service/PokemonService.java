@@ -2,6 +2,7 @@ package com.formation.pokemonapp.service;
 
 import com.formation.pokemonapp.dto.PokemonDTO;
 import com.formation.pokemonapp.entity.Pokemon;
+import com.formation.pokemonapp.errors.ApplicationException;
 import com.formation.pokemonapp.input.PokemonInput;
 
 import java.util.Optional;
@@ -22,7 +23,7 @@ public interface PokemonService {
     /**
      * Création ou modification d'un pokemon
      */
-    Pokemon createOrUpdate(final PokemonInput pokemonInput);
+    Pokemon createOrUpdate(final PokemonInput pokemonInput) throws ApplicationException;
 
     /**
      * Récupération d'un pokemon en fonction de son id
@@ -32,5 +33,5 @@ public interface PokemonService {
     /**
      * Récupération d'un pokemonDTO en fonction de son id
      */
-    PokemonDTO getPokemonDTO(long id);
+    PokemonDTO getPokemonDTO(long id) throws ApplicationException;
 }

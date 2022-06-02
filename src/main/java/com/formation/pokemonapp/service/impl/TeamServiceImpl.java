@@ -3,6 +3,7 @@ package com.formation.pokemonapp.service.impl;
 import com.formation.pokemonapp.dto.TeamDTO;
 import com.formation.pokemonapp.entity.Pokemon;
 import com.formation.pokemonapp.entity.Team;
+import com.formation.pokemonapp.errors.ApplicationException;
 import com.formation.pokemonapp.input.PokemonInput;
 import com.formation.pokemonapp.input.TeamInput;
 import com.formation.pokemonapp.repository.TeamRepository;
@@ -42,8 +43,10 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public TeamDTO getTeamDTO(long id) {
-
+    public TeamDTO getTeamDTO(long id) throws ApplicationException {
+        if(null == teamRepository.findById(id)){
+            throw new ApplicationException("Nous ne parvenons pas à récupérer l'équipe'.");
+        }
         Team team = teamRepository.findById(id);
 
         TeamDTO teamDTO = new TeamDTO();
@@ -54,17 +57,22 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Team createOrUpdate(TeamInput teamInput) {
+    public Team createOrUpdate(TeamInput teamInput) throws ApplicationException {
         Team team = new Team();
         if (teamInput.getId() != 0) {
+            if(teamRepository.findById(teamInput.getId()) == null){
+                throw new ApplicationException("Nous ne parvenons pas à récupérer l'équipe "
+                        + teamInput.getName()
+                        + ".");
+            }
             team.setId(teamInput.getId());
         }
         team.setName(teamInput.getName());
         team.setPokemons(this.createPokemons(teamInput.getPokemons()));
-        return teamRepository.save(team);
+        return teamRepository.save(team) ;
     }
 
-    public Set<Pokemon> createPokemons(Set<PokemonInput> pokemonsInput) {
+    public Set<Pokemon> createPokemons(Set<PokemonInput> pokemonsInput) throws ApplicationException {
         Set<Pokemon> pokemons = new HashSet<>();
         for (PokemonInput pokemonInput : pokemonsInput) {
             Pokemon pokemon = pokemonService.createOrUpdate(pokemonInput);
@@ -74,7 +82,15 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public void delete(TeamInput teamInput) {
+    public void delete(TeamInput teamInput) throws ApplicationException{
+        Team team = null;
+        if(0 != teamInput.getId() )
+            team =teamRepository.findById(teamInput.getId());
+            if(null == team ){
+            throw new ApplicationException("Nous ne parvenons pas à supprimer l'équipe "
+                    + teamInput.getName()
+                    + ".");
+        }
         teamRepository.delete(teamRepository.findById(teamInput.getId()));
     }
 

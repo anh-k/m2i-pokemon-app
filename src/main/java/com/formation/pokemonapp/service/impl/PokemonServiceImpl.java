@@ -2,6 +2,7 @@ package com.formation.pokemonapp.service.impl;
 
 import com.formation.pokemonapp.dto.PokemonDTO;
 import com.formation.pokemonapp.entity.Pokemon;
+import com.formation.pokemonapp.errors.ApplicationException;
 import com.formation.pokemonapp.input.PokemonInput;
 import com.formation.pokemonapp.repository.PokemonRepository;
 import com.formation.pokemonapp.service.PokemonService;
@@ -42,11 +43,22 @@ public class PokemonServiceImpl implements PokemonService {
 
 
     @Override
-    public Pokemon createOrUpdate(PokemonInput pokemonInput) {
+    public Pokemon createOrUpdate(PokemonInput pokemonInput) throws ApplicationException {
+
         Pokemon pokemon = new Pokemon();
+
+
         if (pokemonInput.getId() != 0) {
-            pokemon.setId(pokemonInput.getId());
+
+            if(pokemonRepository.findById(pokemonInput.getId()) == null){
+                throw new ApplicationException("Nous ne parvenons pas à récupérer le pokemon "
+                        + pokemonInput.getName()
+                        + ".");
+            }else{
+                pokemon.setId(pokemonInput.getId());
+            }
         }
+
         pokemon.setName(pokemonInput.getName());
         pokemon.setBaseExp(pokemonInput.getBaseExp());
         return pokemonRepository.save(pokemon);
@@ -57,7 +69,10 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public PokemonDTO getPokemonDTO(long id) {
+    public PokemonDTO getPokemonDTO(long id) throws ApplicationException {
+        if(null == pokemonRepository.findById(id)){
+            throw new ApplicationException("Nous ne parvenons pas à récupérer le pokemon.");
+        }
 
         Pokemon pokemon = pokemonRepository.findById(id);
 
