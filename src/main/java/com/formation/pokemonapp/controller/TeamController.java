@@ -26,6 +26,7 @@ public class TeamController {
 
     @GetMapping("/{id}")
     public TeamDTO getTeam(@PathVariable("id") final String id) throws ApplicationException {
+        log.info("Get team with id {}", id);
         return teamService.getTeamDTO(Long.valueOf(id));
     }
 
@@ -38,6 +39,7 @@ public class TeamController {
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable long id) throws ApplicationException {
+        log.info("Delete team with id {}", id);
         teamService.delete(id);
     }
 }

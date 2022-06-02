@@ -19,6 +19,7 @@ public class PokemonController {
 
     @GetMapping("/{pokemonId}")
     public PokemonDTO getPokemon(@PathVariable("pokemonId") final String pokemonId) throws ApplicationException {
+        log.info("Get Pokemon with id {}", pokemonId);
         return pokemonService.getPokemonDTO(Long.valueOf(pokemonId));
     }
 

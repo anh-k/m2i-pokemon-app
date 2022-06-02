@@ -2,6 +2,7 @@ package com.formation.pokemonapp.unit.services;
 
 import com.formation.pokemonapp.entity.Pokemon;
 import com.formation.pokemonapp.entity.Team;
+import com.formation.pokemonapp.errors.ApplicationException;
 import com.formation.pokemonapp.repository.TeamRepository;
 import com.formation.pokemonapp.service.impl.PokemonServiceImpl;
 import com.formation.pokemonapp.service.impl.TeamServiceImpl;
@@ -52,7 +53,7 @@ public class TeamServiceTest {
 
     @Test
     @DisplayName("save team succesfully")
-    void goodData() {
+    void goodData() throws ApplicationException {
         teamService.saveTeam(team);
         verify(teamRepository).save(teamCaptor.capture());
         assertThat(teamCaptor.getValue().getId()).isEqualTo(1);
