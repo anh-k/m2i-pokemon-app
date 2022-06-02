@@ -1,12 +1,12 @@
 package com.formation.pokemonapp.service.impl;
 
+import com.formation.pokemonapp.entity.User;
+import com.formation.pokemonapp.entity.UserPrincipal;
 import com.formation.pokemonapp.enumeration.Role;
 import com.formation.pokemonapp.exception.model.EmailExistException;
 import com.formation.pokemonapp.exception.model.EmailNotFoundException;
 import com.formation.pokemonapp.exception.model.UserNameExistException;
 import com.formation.pokemonapp.exception.model.UserNotFoundException;
-import com.formation.pokemonapp.entity.User;
-import com.formation.pokemonapp.entity.UserPrincipal;
 import com.formation.pokemonapp.repository.UserRepository;
 import com.formation.pokemonapp.service.EmailService;
 import com.formation.pokemonapp.service.UserService;
@@ -15,7 +15,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -36,7 +35,7 @@ import java.util.List;
 
 import static com.formation.pokemonapp.constant.FileConstant.*;
 import static com.formation.pokemonapp.constant.UserImplConstant.*;
-import static com.formation.pokemonapp.enumeration.Role.*;
+import static com.formation.pokemonapp.enumeration.Role.ROLE_USER;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
@@ -45,16 +44,16 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 @Qualifier("userDetailsService")
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
+    private Logger LOGGER = LoggerFactory.getLogger(getClass());
+    private EmailService emailService;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final EmailService emailService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findUserByUsername(username);
-        if (user == null){
+        if (user == null) {
             LOGGER.error(NO_USER_FOUND_BY_USERNAME + username);
             throw new UsernameNotFoundException(NO_USER_FOUND_BY_USERNAME + username);
         } else {
@@ -153,7 +152,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void resetPassword(String email) throws EmailNotFoundException, MessagingException {
         User user = userRepository.findUserByEmail(email);
-        if (user == null){
+        if (user == null) {
             throw new EmailNotFoundException(NO_USER_FOUND_BY_EMAIL + email);
         }
         String password = generatePassword();
@@ -171,9 +170,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     private void saveProfileImage(User user, MultipartFile profileImage) throws IOException {
-        if (profileImage != null){
+        if (profileImage != null) {
             Path userFolder = Paths.get(USER_FOLDER + user.getUsername()).toAbsolutePath().normalize();
-            if (!Files.exists(userFolder)){
+            if (!Files.exists(userFolder)) {
                 Files.createDirectories(userFolder);
                 LOGGER.info(DIRECTORY_CREATED + userFolder);
             }
@@ -211,29 +210,28 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
-
     private User validateNewUsernameAndEmail(String currentUsername, String newUsername, String newEmail) throws UserNotFoundException, UserNameExistException, EmailExistException {
 
         User userByNewUsername = findUserByUsername(newUsername);
         User userByNewEmail = findUserByEmail(newEmail);
 
-        if (StringUtils.isNotBlank(currentUsername)){
+        if (StringUtils.isNotBlank(currentUsername)) {
             User currentUser = findUserByUsername(currentUsername);
-            if (currentUser == null){
+            if (currentUser == null) {
                 throw new UserNotFoundException(NO_USER_FOUND_BY_USERNAME + currentUsername);
             }
-            if (userByNewUsername != null && !currentUser.getId().equals(userByNewUsername.getId())){
+            if (userByNewUsername != null && !currentUser.getId().equals(userByNewUsername.getId())) {
                 throw new UserNameExistException(USERNAME_ALREADY_EXISTS);
             }
-            if (userByNewEmail != null && !currentUser.getId().equals(userByNewEmail.getId())){
+            if (userByNewEmail != null && !currentUser.getId().equals(userByNewEmail.getId())) {
                 throw new EmailExistException(EMAIL_ALREADY_EXISTS);
             }
             return currentUser;
         } else {
-            if (userByNewUsername != null){
+            if (userByNewUsername != null) {
                 throw new UserNameExistException(USERNAME_ALREADY_EXISTS);
             }
-            if (userByNewEmail != null){
+            if (userByNewEmail != null) {
                 throw new EmailExistException(EMAIL_ALREADY_EXISTS);
             }
             return null;
