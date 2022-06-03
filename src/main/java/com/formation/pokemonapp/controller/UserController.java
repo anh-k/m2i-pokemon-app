@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -58,7 +59,7 @@ public class UserController extends ExceptionHandling {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User>  register(@RequestBody User user) throws UserNotFoundException, EmailExistException, UserNameExistException, MessagingException {
+    public ResponseEntity<User>  register(@Valid @RequestBody User user) throws UserNotFoundException, EmailExistException, UserNameExistException, MessagingException {
         User newUser = userService.register(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail());
         System.out.println(user.getPassword());
         return new ResponseEntity<>(newUser, OK);

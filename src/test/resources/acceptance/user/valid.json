@@ -1,0 +1,18 @@
+{
+  "userId": "2950325913",
+  "firstName": "tests",
+  "lastName": "test",
+  "username": "test",
+  "email": "test@email.com",
+  "profileImageUrl": "http://localhost:8080/user/image/profile/test",
+  "lastLoginDate": "2022-06-03T09:59:27.354+00:00",
+  "lastLoginDateDisplay": "2022-06-03T06:34:11.957+00:00",
+  "joinDate": "2022-06-03T06:33:50.722+00:00",
+  "role": "ROLE_USER",
+  "authorities": [
+    "user:read"
+  ],
+  "id": 16,
+  "active": true,
+  "notLocked": true
+}

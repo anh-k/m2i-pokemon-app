@@ -1,8 +1,8 @@
-package com.formation.pokemonapp.acceptance.team;
+package com.formation.pokemonapp.acceptance.user;
 
 import com.formation.pokemonapp.acceptance.tools.AcceptanceTestTools;
-import com.formation.pokemonapp.entity.Team;
-import com.formation.pokemonapp.repository.TeamRepository;
+import com.formation.pokemonapp.entity.User;
+import com.formation.pokemonapp.repository.UserRepository;
 import com.formation.pokemonapp.tools.LoadJsonFile;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -24,22 +24,22 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredArgsConstructor
-public class TeamDefinitions {
+public class UserDefinitions {
     private String requestJson;
     private int statusCode;
 
-    private final TeamRepository teamRepository;
+    private final UserRepository userRepository;
 
     @LocalServerPort
     private int port;
 
-    @Given("Application saves Team from file {string}")
-    public void save_team_from_file(String jsonFile) throws IOException {
+    @Given("Application saves User from file {string}")
+    public void save_user_from_file(String jsonFile) throws IOException {
         requestJson = LoadJsonFile.toString(jsonFile);
     }
 
-    @When("Application wants to call Team with POST (.+)$")
-    public void call_team_with_post_team(String endpoint) {
+    @When("Application wants to call User with POST (.+)$")
+    public void call_team_with_post_user(String endpoint) {
         ClientHttpRequestFactory requestFactory =
                 new HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
 
@@ -57,14 +57,14 @@ public class TeamDefinitions {
         }
     }
 
-    @Then("Saves {int} Team")
-    public void save_team(int number) {
-        List<Team> teams = teamRepository.findAll();
-        assertThat(teams).hasSize(number);
+    @Then("Saves {int} User")
+    public void save_user(int number) {
+        List<User> users = userRepository.findAll();
+        assertThat(users).hasSize(number);
     }
 
-    @Then("Application receives http status code of {int} with Team")
-    public void receive_http_status_code_team(int codeNumber) {
+    @Then("Application receives http status code of {int} with User")
+    public void receive_http_status_code_user(int codeNumber) {
         assertThat(statusCode).isEqualTo(codeNumber);
     }
 }

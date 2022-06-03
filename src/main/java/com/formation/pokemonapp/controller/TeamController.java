@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.Set;
 
@@ -27,9 +28,10 @@ public class TeamController {
     @GetMapping("/{id}")
     public TeamDTO getTeam(@PathVariable("id") final String id) throws ApplicationException {
         log.info("Get team with id {}", id);
-        return teamService.getTeamDTO(Long.valueOf(id));
+        return teamService.getTeamDTO(Long.parseLong(id));
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
     @PostMapping("/createOrUpdate")
     public Team createOrUpdate(@Valid @RequestBody TeamDTO teamDTO) throws ApplicationException {
         log.info("{} has been saved", teamDTO);

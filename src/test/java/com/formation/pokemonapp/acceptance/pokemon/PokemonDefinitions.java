@@ -1,8 +1,8 @@
-package com.formation.pokemonapp.acceptance.team;
+package com.formation.pokemonapp.acceptance.pokemon;
 
 import com.formation.pokemonapp.acceptance.tools.AcceptanceTestTools;
-import com.formation.pokemonapp.entity.Team;
-import com.formation.pokemonapp.repository.TeamRepository;
+import com.formation.pokemonapp.entity.Pokemon;
+import com.formation.pokemonapp.repository.PokemonRepository;
 import com.formation.pokemonapp.tools.LoadJsonFile;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -24,22 +24,22 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredArgsConstructor
-public class TeamDefinitions {
+public class PokemonDefinitions {
     private String requestJson;
     private int statusCode;
 
-    private final TeamRepository teamRepository;
+    private final PokemonRepository pokemonRepository;
 
     @LocalServerPort
     private int port;
 
-    @Given("Application saves Team from file {string}")
-    public void save_team_from_file(String jsonFile) throws IOException {
+    @Given("Application saves Pokemon from file {string}")
+    public void save_pokemon_from_file(String jsonFile) throws IOException {
         requestJson = LoadJsonFile.toString(jsonFile);
     }
 
-    @When("Application wants to call Team with POST (.+)$")
-    public void call_team_with_post_team(String endpoint) {
+    @When("Application wants to call Pokemon with POST (.+)$")
+    public void call_team_with_post_pokemon(String endpoint) {
         ClientHttpRequestFactory requestFactory =
                 new HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
 
@@ -57,14 +57,14 @@ public class TeamDefinitions {
         }
     }
 
-    @Then("Saves {int} Team")
-    public void save_team(int number) {
-        List<Team> teams = teamRepository.findAll();
-        assertThat(teams).hasSize(number);
+    @Then("Saves {int} Pokemon")
+    public void save_pokemon(int number) {
+        List<Pokemon> pokemons = pokemonRepository.findAll();
+        assertThat(pokemons).hasSize(number);
     }
 
-    @Then("Application receives http status code of {int} with Team")
-    public void receive_http_status_code_team(int codeNumber) {
+    @Then("Application receives http status code of {int} with Pokemon")
+    public void receive_http_status_code_pokemon(int codeNumber) {
         assertThat(statusCode).isEqualTo(codeNumber);
     }
 }

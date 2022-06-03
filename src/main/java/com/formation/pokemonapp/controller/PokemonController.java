@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
+
 
 @RestController
 @RequestMapping("/pokemon")
@@ -21,8 +23,9 @@ public class PokemonController {
     public PokemonDTO getPokemon(@PathVariable("pokemonId") final String pokemonId) throws ApplicationException {
         log.info("Get Pokemon with id {}", pokemonId);
         return pokemonService.getPokemonDTO(Long.valueOf(pokemonId));
-    }
 
+    }
+    @ExceptionHandler(ConstraintViolationException.class)
     @PostMapping("/createOrUpdate")
     public Pokemon createOrUpdate(@RequestBody PokemonDTO pokemonDTO) throws ApplicationException {
         log.info("{} has been saved", pokemonDTO);
